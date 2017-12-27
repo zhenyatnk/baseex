@@ -88,7 +88,7 @@ TEST_F(CIteratorStream_test, next_some_elements)
     ASSERT_STREQ(buffer.c_str(), result.c_str());
 }
 
-TEST_F(CIteratorStream_test, throw_invalid_position)
+TEST_F(CIteratorStream_test, next_throw_invalid_position)
 {
     std::string buffer = "";
     auto iterator = baseex::core::CreateStreamBuffer(buffer.c_str(), buffer.size())->CreateIterator();
@@ -164,12 +164,19 @@ TEST_F(CIteratorStream_test, prev_some_elements)
     ASSERT_STREQ("1tset", result.c_str());
 }
 
+TEST_F(CIteratorStream_test, prev_throw_invalid_position)
+{
+    std::string buffer = "";
+    auto iterator = baseex::core::CreateStreamBuffer(buffer.c_str(), buffer.size())->CreateIterator();
+    ASSERT_THROW(iterator.current(), exceptions::iterator_invalid_position_error);
+}
+
 TEST_F(CIteratorStream_test, prev_throw_out_of_range)
 {
     std::string buffer = "1";
     auto iterator = baseex::core::CreateStreamBuffer(buffer.c_str(), buffer.size())->CreateIterator();
-    ASSERT_EQ(true, iterator.prev());
-    ASSERT_EQ(false, iterator.prev());
+    ASSERT_EQ(true, iterator.next());
+    ASSERT_EQ(false, iterator.next());
 
     ASSERT_THROW(iterator.current(), exceptions::iterator_out_of_range_error);
 }

@@ -19,7 +19,7 @@ public:
 
 public:
     class Iterator
-        :TIterator<uint8_t>
+        :TIterator<uint8_t, IBidirectionalNavigator>
     {
         friend ILinearStream;
     public:
@@ -28,11 +28,13 @@ public:
         virtual void rewind() override;
         virtual bool is_valid() const override;
         virtual bool next() override;
+        virtual bool prev() override;
         virtual uint8_t current() override;
 
     private:
         ILinearStream::Ptr m_Stream;
         int m_Offset;
+        bool m_IsRewind;
         size_t m_Size;
     };
 
@@ -108,7 +110,7 @@ public:
 
 public:
     class Iterator
-        :TIterator<uint8_t>
+        :TIterator<uint8_t, IBidirectionalNavigator>
     {
         friend IStream;
     public:
@@ -117,11 +119,13 @@ public:
         virtual void rewind() override;
         virtual bool is_valid() const override;
         virtual bool next() override;
+        virtual bool prev() override;
         virtual uint8_t current() override;
 
     private:
         IStream::Ptr m_Stream;
         int m_Offset;
+        bool m_IsRewind;
         size_t m_Size;
     };
 
