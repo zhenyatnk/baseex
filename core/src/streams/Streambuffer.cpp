@@ -118,6 +118,8 @@ public:
 
     virtual size_t Size() const override;
     virtual size_t Read(size_t Offset, uint8_t* buffer, size_t size) const override;
+    virtual size_t Read(IStream::Iterator Offset, uint8_t* buffer, size_t size) const override;
+    virtual size_t Read(IStream::Iterator Start, IStream::Iterator End, uint8_t* buffer) const override;
     virtual IStream::Ptr Read(size_t Offset, size_t size) const override;
 
 private:
@@ -172,6 +174,26 @@ IStream::Ptr CStreamBuffer::Read(size_t Offset, size_t size) const
         lStreamBuffer = CreateStreamBuffer((void*)((char*)m_Buff + Offset), size);
     }
     return lStreamBuffer;
+}
+
+size_t CStreamBuffer::Read(IStream::Iterator Offset, uint8_t* buffer, size_t size) const
+{
+    if (!Offset.is_valid())
+        return 0;
+    return Read(this->GetOffset(Offset), buffer, size);
+}
+size_t CStreamBuffer::Read(IStream::Iterator Start, IStream::Iterator End, uint8_t* buffer) const
+{
+    if (!Start.is_valid() || End.is_valid())
+        return 0;
+
+    size_t start_offset = this->GetOffset(Start);
+    size_t end_offset = this->GetOffset(End);
+
+    if (start_offset > end_offset)
+        std::swap(start_offset, end_offset);
+
+    return Read(start_offset, buffer, end_offset - start_offset);
 }
 
 IStream::Ptr CreateStreamBuffer(const void* aBuff, const size_t &aSize)

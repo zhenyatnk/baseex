@@ -1,5 +1,7 @@
 #pragma once
 
+#include <baseex/core/IIterator.hpp>
+#include <baseex/core/IIteratorException.hpp>
 #include <baseex/core/IStreamException.hpp>
 
 #include <memory>
@@ -10,9 +12,29 @@ namespace baseex {
 namespace core {
 
 class BASEEX_CORE_EXPORT ILinearStream
+    :public std::enable_shared_from_this<ILinearStream>
 {
 public:
     typedef std::shared_ptr<ILinearStream> Ptr;
+
+public:
+    class Iterator
+        :TIterator<uint8_t>
+    {
+        friend ILinearStream;
+    public:
+        explicit Iterator(ILinearStream::Ptr aStream);
+
+        virtual void rewind() override;
+        virtual bool is_valid() const override;
+        virtual bool next() override;
+        virtual uint8_t current() override;
+
+    private:
+        ILinearStream::Ptr m_Stream;
+        int m_Offset;
+        size_t m_Size;
+    };
 
 public:
     virtual ~ILinearStream() = default;
@@ -38,6 +60,17 @@ public:
         CHECK_THROW_BOOL((Size<Type>() > aElement),
             exceptions::stream_error, "Stream index out of bounds. Size stream='" + std::to_string(Size<Type>()) + "' Requsted index='" + std::to_string(aElement) + "'.");
         return *(GetBuff<const Type*>() + aElement);
+    }
+
+    ILinearStream::Iterator CreateIterator()
+    {
+        return Iterator(shared_from_this());
+    }
+
+protected:
+    int GetOffset(const ILinearStream::Iterator &aIterator) const
+    {
+        return aIterator.m_Offset;
     }
 };
 
@@ -68,21 +101,54 @@ public:
 
 //-------------------------------------------------------------
 class IStream
+    :public std::enable_shared_from_this<IStream>
 {
 public:
     typedef std::shared_ptr<IStream> Ptr;
+
+public:
+    class Iterator
+        :TIterator<uint8_t>
+    {
+        friend IStream;
+    public:
+        explicit Iterator(IStream::Ptr aStream); 
+
+        virtual void rewind() override;
+        virtual bool is_valid() const override;
+        virtual bool next() override;
+        virtual uint8_t current() override;
+
+    private:
+        IStream::Ptr m_Stream;
+        int m_Offset;
+        size_t m_Size;
+    };
 
 public:
     virtual ~IStream() = default;
 
     virtual size_t Size() const = 0;
     virtual size_t Read(size_t Offset, uint8_t* buffer, size_t size) const = 0;
+    virtual size_t Read(IStream::Iterator Offset, uint8_t* buffer, size_t size) const = 0;
+    virtual size_t Read(IStream::Iterator Start, IStream::Iterator End, uint8_t* buffer) const = 0;
     virtual IStream::Ptr Read(size_t Offset, size_t size) const = 0;
 
     template<class Type>
     size_t Size() const
     {
         return Size() / sizeof(Type);
+    }
+
+    IStream::Iterator CreateIterator()
+    {
+        return Iterator(shared_from_this());
+    }
+
+protected:
+    int GetOffset(const IStream::Iterator &aIterator) const
+    {
+        return aIterator.m_Offset;
     }
 };
 
