@@ -130,9 +130,13 @@ public:
 
     virtual size_t Size() const = 0;
     virtual size_t Read(size_t Offset, uint8_t* buffer, size_t size) const = 0;
-    virtual size_t Read(IStream::Iterator Offset, uint8_t* buffer, size_t size) const = 0;
-    virtual size_t Read(IStream::Iterator Start, IStream::Iterator End, uint8_t* buffer) const = 0;
+    virtual size_t Read(const IStream::Iterator &Offset, uint8_t* buffer, size_t size) const = 0;
+    virtual size_t Read(const IStream::Iterator &Start, const IStream::Iterator &End, uint8_t* buffer) const = 0;
+
     virtual IStream::Ptr Read(size_t Offset, size_t size) const = 0;
+    virtual IStream::Ptr Read(const IStream::Iterator &Offset, size_t size) const = 0;
+    virtual IStream::Ptr Read(const IStream::Iterator &Start, const IStream::Iterator &End) const = 0;
+    virtual IStream::Ptr Read(const IStream::Iterator &Offset) const = 0;
 
     template<class Type>
     size_t Size() const

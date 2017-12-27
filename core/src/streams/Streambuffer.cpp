@@ -118,9 +118,12 @@ public:
 
     virtual size_t Size() const override;
     virtual size_t Read(size_t Offset, uint8_t* buffer, size_t size) const override;
-    virtual size_t Read(IStream::Iterator Offset, uint8_t* buffer, size_t size) const override;
-    virtual size_t Read(IStream::Iterator Start, IStream::Iterator End, uint8_t* buffer) const override;
+    virtual size_t Read(const IStream::Iterator &Offset, uint8_t* buffer, size_t size) const override;
+    virtual size_t Read(const IStream::Iterator &Start, const IStream::Iterator &End, uint8_t* buffer) const override;
     virtual IStream::Ptr Read(size_t Offset, size_t size) const override;
+    virtual IStream::Ptr Read(const IStream::Iterator &Offset, size_t size) const override;
+    virtual IStream::Ptr Read(const IStream::Iterator &Start, const IStream::Iterator &End) const override;
+    virtual IStream::Ptr Read(const IStream::Iterator &Offset) const override;
 
 private:
     void* m_Buff;
@@ -176,15 +179,16 @@ IStream::Ptr CStreamBuffer::Read(size_t Offset, size_t size) const
     return lStreamBuffer;
 }
 
-size_t CStreamBuffer::Read(IStream::Iterator Offset, uint8_t* buffer, size_t size) const
+size_t CStreamBuffer::Read(const IStream::Iterator &Offset, uint8_t* buffer, size_t size) const
 {
     if (!Offset.is_valid())
         return 0;
     return Read(this->GetOffset(Offset), buffer, size);
 }
-size_t CStreamBuffer::Read(IStream::Iterator Start, IStream::Iterator End, uint8_t* buffer) const
+
+size_t CStreamBuffer::Read(const IStream::Iterator &Start, const IStream::Iterator &End, uint8_t* buffer) const
 {
-    if (!Start.is_valid() || End.is_valid())
+    if (!Start.is_valid() || !End.is_valid())
         return 0;
 
     size_t start_offset = this->GetOffset(Start);
@@ -193,7 +197,40 @@ size_t CStreamBuffer::Read(IStream::Iterator Start, IStream::Iterator End, uint8
     if (start_offset > end_offset)
         std::swap(start_offset, end_offset);
 
-    return Read(start_offset, buffer, end_offset - start_offset);
+    return Read(start_offset, buffer, (end_offset - start_offset) + 1);
+}
+
+IStream::Ptr CStreamBuffer::Read(const IStream::Iterator &Offset, size_t size) const
+{
+    if (!Offset.is_valid())
+        return nullptr;
+    return Read(this->GetOffset(Offset), size);
+}
+
+IStream::Ptr CStreamBuffer::Read(const IStream::Iterator &Start, const IStream::Iterator &End) const
+{
+    if (!Start.is_valid() || !End.is_valid())
+        return 0;
+
+    size_t start_offset = this->GetOffset(Start);
+    size_t end_offset = this->GetOffset(End);
+
+    if (start_offset > end_offset)
+        std::swap(start_offset, end_offset);
+
+    return Read(start_offset, (end_offset - start_offset) + 1);
+}
+
+IStream::Ptr CStreamBuffer::Read(const IStream::Iterator &Offset) const
+{
+    IStream::Ptr lStreamBuffer;
+    if (Offset.is_valid())
+    {
+        auto offset = this->GetOffset(Offset);
+        if (offset < m_Size)
+            lStreamBuffer = Read(offset, m_Size - offset);
+    }
+    return lStreamBuffer;
 }
 
 IStream::Ptr CreateStreamBuffer(const void* aBuff, const size_t &aSize)
