@@ -1,6 +1,7 @@
 #pragma once
 
 #include <baseex/core/IIterator.hpp>
+#include <baseex/core/CFileName.hpp>
 #include <baseex/core/IIteratorException.hpp>
 #include <baseex/core/IStreamException.hpp>
 
@@ -266,6 +267,9 @@ public:
 BASEEX_CORE_EXPORT IStreamBuffer::Ptr CreateStreamBuffer(const void* aBuff, const size_t &aSize);
 BASEEX_CORE_EXPORT IStreamWriteBuffer::Ptr CreateStreamWriteBuffer(const void* aBuff, const size_t &aSize);
 BASEEX_CORE_EXPORT IStreamWriteBuffer::Ptr CreateStreamWriteBuffer(const size_t &aSize);
+
+BASEEX_CORE_EXPORT IStream::Ptr CreateStreamFile(const CFileName &aFilename);
+BASEEX_CORE_EXPORT IStream::Ptr CreateStreamFileOpt(const CFileName &aFilename);
 
 }
 

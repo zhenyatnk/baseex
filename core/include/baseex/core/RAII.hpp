@@ -20,6 +20,30 @@ public:
     virtual ~IRAII() = default;
 };
 
+template <typename Type>
+class RAII
+    :public IRAII
+{
+public:
+    using TypeFunction = std::function<void(Type&)>;
+
+public:
+    RAII(TypeFunction aCtor, TypeFunction aDtor)
+        :m_Ctor(aCtor), m_Dtor(aDtor)
+    {
+        m_Ctor(m_Obj);
+    }
+
+    virtual ~RAII()
+    {
+        m_Dtor(m_Obj);
+    }
+
+private:
+    Type m_Obj;
+    TypeFunction m_Ctor;
+    TypeFunction m_Dtor;
+};
 //--------------------------------------------------------------
 template <typename Type>
 class CRAII

@@ -16,6 +16,15 @@ public:
     {}
 };
 
+class BASEEX_CORE_EXPORT file_stream_error
+    :public stream_error
+{
+public:
+    file_stream_error(const std::string &aMessage, const int &aErrorCode)
+        :stream_error("File stream error: \'" + aMessage + "\'", aErrorCode)
+    {}
+};
+
 }
 }
 }
