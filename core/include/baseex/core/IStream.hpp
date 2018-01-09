@@ -11,7 +11,7 @@
 
 namespace baseex {
 namespace core {
-	
+
 class IStreamBuffer;
 
 class IStream
@@ -26,7 +26,7 @@ public:
     {
         friend IStream;
     public:
-        explicit Iterator(IStream::Ptr aStream); 
+        explicit Iterator(IStream::Ptr aStream);
 
         virtual void rewind() override;
         virtual bool is_valid() const override;
@@ -40,7 +40,7 @@ public:
         bool m_IsRewind;
         size_t m_Size;
     };
-	
+
 public:
     virtual ~IStream() = default;
 
@@ -53,17 +53,17 @@ public:
     virtual size_t                         Read(const IStream::Iterator &aOffset, const IStream::Iterator &aEnd, uint8_t* aBuffer) const = 0;
     virtual std::shared_ptr<IStreamBuffer> Read(const IStream::Iterator &aOffset, const IStream::Iterator &aEnd) const = 0;
     virtual std::shared_ptr<IStreamBuffer> Read(const IStream::Iterator &aOffset) const = 0;
-	
+
 	IStream::Iterator CreateIterator()
     {
         return Iterator(shared_from_this());
     }
-	
+
 protected:
     int GetOffset(const IStream::Iterator &aIterator) const
     {
         return aIterator.m_Offset;
-    }	
+    }
 };
 
 class IStreamBuffer
@@ -82,7 +82,7 @@ public:
     {
         return static_cast<Type>(GetData());
     }
-    
+
     template<class Type>
     Type GetElement(uint64_t aElement) const
     {
@@ -98,11 +98,17 @@ class IStreamWriteBuffer
 {
 public:
     using Ptr = std::shared_ptr<IStreamWriteBuffer>;
-	
+
 public:
    virtual ~IStreamWriteBuffer() = default;
 
    virtual void* GetData() = 0;
+
+   template<class Type>
+   Type GetBuff()
+   {
+      return static_cast<Type>(GetData());
+   }
 };
 //-------------------------------------------------------------------------------------
 BASEEX_CORE_EXPORT IStreamBuffer::Ptr CreateStreamBuffer(const void* aBuff, const size_t &aSize);
