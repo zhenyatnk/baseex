@@ -9,7 +9,6 @@
 
 namespace baseex {
 namespace core {
-namespace experimental {
 
 class CStreamFile
     :public IStream
@@ -275,8 +274,6 @@ IStreamBuffer::Ptr CStreamFileOpt::Read(const IStream::Iterator &aOffset) const
 IStream::Ptr CreateStreamFileOpt(const CFileName &aFilename)
 {
     return IStream::Ptr(new CStreamFileOpt(aFilename));
-}
-
 }
 
 }

@@ -1,7 +1,7 @@
 #include <baseex/core/IStream.hpp>
 #include <gtest/gtest.h>
 
-using namespace baseex::core::experimental;
+using namespace baseex::core;
 
 namespace
 {

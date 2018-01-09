@@ -3,7 +3,7 @@
 #include <future>
 
 //--------------------------------------------------------------------------------------------------------------------------------------
-using namespace baseex::core::experimental;
+using namespace baseex::core;
 
 namespace
 {
