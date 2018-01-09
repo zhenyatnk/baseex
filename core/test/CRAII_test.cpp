@@ -224,3 +224,13 @@ TEST_F(CRAII_test, thread_join_raii_rvalue_notjoinable)
 {
     thread_join_raii lTest(std::thread());
 }
+
+TEST_F(CRAII_test, dtor_raii)
+{
+    int test = 0;
+    {
+        dtor_raii l([&test]() {test = 1; });
+        ASSERT_EQ(0, test);
+    }
+    ASSERT_EQ(1, test);
+}

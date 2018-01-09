@@ -120,6 +120,24 @@ private:
 };
 
 //--------------------------------------------------------------
+
+class dtor_raii
+    :public IRAII
+{
+public:
+    dtor_raii(const std::function<void(void)> &aDtor)
+        :m_Dtor(aDtor)
+    {}
+
+    ~dtor_raii()
+    {
+        m_Dtor();
+    }
+
+    std::function<void(void)> m_Dtor;
+};
+
+//--------------------------------------------------------------
 template<typename Type>
 class lock_guard_ex
     :public CRAII <Type>
