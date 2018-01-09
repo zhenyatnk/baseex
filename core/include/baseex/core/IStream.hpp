@@ -76,6 +76,20 @@ public:
     virtual ~IStreamBuffer() = default;
 
     virtual const void* GetData() const = 0;
+
+    template<class Type>
+    Type GetBuff() const
+    {
+        return static_cast<Type>(GetData());
+    }
+    
+    template<class Type>
+    Type GetElement(uint64_t aElement) const
+    {
+        CHECK_THROW_BOOL((Size()/sizeof(Type) > aElement),
+                         exceptions::stream_error, "Stream index out of bounds. Size stream='" + std::to_string(Size()/sizeof(Type)) + "' Requsted index='" + std::to_string(aElement) + "'.");
+        return *(GetBuff<const Type*>() + aElement);
+    }
 };
 
 
