@@ -118,7 +118,7 @@ size_t CStreamBuffer::Read(const IStream::Iterator &aOffset, const IStream::Iter
 IStreamBuffer::Ptr CStreamBuffer::Read(const IStream::Iterator &aOffset, const IStream::Iterator &aEnd) const
 {
     if (!aOffset.is_valid() || !aEnd.is_valid())
-        return 0;
+        return nullptr;
 
     size_t start_offset = this->GetOffset(aOffset);
     size_t end_offset = this->GetOffset(aEnd);

@@ -8,7 +8,7 @@ namespace baseex {
 namespace core {
 
 IStream::Iterator::Iterator(IStream::Ptr aStream)
-    : m_Stream(aStream), m_Offset(-1), m_Size(aStream->Size()), m_IsRewind(true)
+    : m_Stream(aStream), m_Offset(-1), m_IsRewind(true), m_Size(aStream->Size())
 {}
 
 void IStream::Iterator::rewind()

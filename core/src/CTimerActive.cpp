@@ -1,5 +1,5 @@
-#include <baseex/core/ITimerActive.hpp>
 #include <baseex/core/RAII.hpp>
+#include <baseex/core/ITimerActive.hpp>
 
 #include <future>
 
@@ -57,13 +57,13 @@ private:
 };
 
 CTimerActive::CTimerActive(unsigned int aIntervalMs)
-    :m_IntervalMs(aIntervalMs), m_InfinityRepeat(true), m_CountRepeat(0)
+    :m_IntervalMs(aIntervalMs), m_CountRepeat(0), m_InfinityRepeat(true)
 {
     Run();
 }
 
 CTimerActive::CTimerActive(unsigned int aIntervalMs, unsigned int aCountRepeat)
-    :m_IntervalMs(aIntervalMs), m_InfinityRepeat(false), m_CountRepeat(aCountRepeat)
+    :m_IntervalMs(aIntervalMs), m_CountRepeat(aCountRepeat), m_InfinityRepeat(false)
 {
     Run();
 }

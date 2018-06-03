@@ -17,7 +17,9 @@ public:
     using Ptr = std::shared_ptr<IRAII>;
 
 public:
-    virtual ~IRAII() = default;
+    virtual ~IRAII()
+    {
+    }
 };
 
 template <typename Type>
@@ -34,7 +36,7 @@ public:
         m_Ctor(m_Obj);
     }
 
-    virtual ~RAII()
+    virtual ~RAII() override
     {
         m_Dtor(m_Obj);
     }
@@ -71,7 +73,7 @@ private:
 };
 //--------------------------------------------------------------
 template <typename Type>
-class CRAII <std::shared_ptr<Type>>
+class CRAII <std::shared_ptr<Type> >
     :public IRAII
 {
 public:
@@ -143,7 +145,7 @@ class lock_guard_ex
 {
 public:
     lock_guard_ex(Type& aObj)
-        :CRAII(aObj, [](Type& aObj) {aObj.lock(); }, [](Type& aObj) {aObj.unlock(); })
+        :CRAII<Type>(aObj, [](Type& aObj) {aObj.lock(); }, [](Type& aObj) {aObj.unlock(); })
     {}
 };
 
@@ -153,7 +155,7 @@ class lock_guard_ex <std::shared_ptr<Type>>
 {
 public:
     lock_guard_ex(std::shared_ptr<Type> aObj)
-        :CRAII(aObj, [](std::shared_ptr<Type> aObj) {aObj->lock(); }, [](std::shared_ptr<Type> aObj) {aObj->unlock(); })
+        :CRAII<Type>(aObj, [](std::shared_ptr<Type> aObj) {aObj->lock(); }, [](std::shared_ptr<Type> aObj) {aObj->unlock(); })
     {}
 };
 //--------------------------------------------------------------
@@ -163,7 +165,7 @@ class force_lock_guard_ex
 {
 public:
     force_lock_guard_ex(Type& aObj)
-        :CRAII(aObj, [](Type& aObj) {aObj.force_lock(); }, [](Type& aObj) {aObj.force_unlock(); })
+        :CRAII<Type>(aObj, [](Type& aObj) {aObj.force_lock(); }, [](Type& aObj) {aObj.force_unlock(); })
     {}
 };
 
@@ -173,7 +175,7 @@ class force_lock_guard_ex <std::shared_ptr<Type>>
 {
 public:
     force_lock_guard_ex(std::shared_ptr<Type> aObj)
-        :CRAII(aObj, [](std::shared_ptr<Type> aObj) {aObj->force_lock(); }, [](std::shared_ptr<Type> aObj) {aObj->force_unlock(); })
+        :CRAII<Type>(aObj, [](std::shared_ptr<Type> aObj) {aObj->force_lock(); }, [](std::shared_ptr<Type> aObj) {aObj->force_unlock(); })
     {}
 };
 //--------------------------------------------------------------
@@ -183,7 +185,7 @@ class set_values_raii
 {
 public:
     set_values_raii(Type& aObj, Type aFirst, Type aSecond)
-        :CRAII(aObj, [aFirst](Type& aObj) {aObj = aFirst; }, [aSecond](Type& aObj) {aObj = aSecond; })
+        :CRAII<Type>(aObj, [aFirst](Type& aObj) {aObj = aFirst; }, [aSecond](Type& aObj) {aObj = aSecond; })
     {}
 };
 
@@ -193,7 +195,7 @@ class set_values_raii <std::atomic<Type>>
 {
 public:
     set_values_raii(std::atomic<Type>& aObj, Type aFirst, Type aSecond)
-        :CRAII(aObj, [aFirst](std::atomic<Type>& aObj) {aObj = aFirst; }, [aSecond](std::atomic<Type>& aObj) {aObj = aSecond; })
+        :CRAII<Type>(aObj, [aFirst](std::atomic<Type>& aObj) {aObj = aFirst; }, [aSecond](std::atomic<Type>& aObj) {aObj = aSecond; })
     {}
 };
 
@@ -226,7 +228,7 @@ public:
     {}
 
     explicit thread_join_raii(std::shared_ptr<std::thread> aObj)
-        :m_RAII(std::make_shared<CRAII<std::shared_ptr<std::thread>>>(aObj, [](std::shared_ptr<std::thread>& aObj) {}, [](std::shared_ptr<std::thread>& aObj) { if (aObj->joinable()) aObj->join(); }))
+        :m_RAII(std::make_shared<CRAII<std::shared_ptr<std::thread> > >(aObj, [](std::shared_ptr<std::thread> aObj) {}, [](std::shared_ptr<std::thread> aObj) { if (aObj->joinable()) aObj->join(); }))
     {}
 
     explicit thread_join_raii(std::thread& aObj)

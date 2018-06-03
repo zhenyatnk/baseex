@@ -8,7 +8,7 @@ namespace core {
 
 //--------------------------------------------------------------------------------------------------------
 CFileName::CFileName()
-    :m_Path(L""), m_FileName(L""), m_FullFileName(L"")
+    :m_FileName(L""), m_Path(L""), m_FullFileName(L"")
 {
 #ifdef _WIN32
     m_Separator = L"\\";
@@ -18,7 +18,7 @@ CFileName::CFileName()
 }
 
 CFileName::CFileName(const std::wstring& aFullFileName)
-    :m_Path(L""), m_FileName(L""), m_FullFileName(aFullFileName)
+    :m_FileName(L""), m_Path(L""), m_FullFileName(aFullFileName)
 {
 #ifdef _WIN32
     m_Separator = L"\\";
@@ -43,7 +43,7 @@ CFileName::CFileName(const std::wstring& aFullFileName)
         m_FileName = aFullFileName;
 }
 CFileName::CFileName(const CPathName& aPath, const std::wstring& aFileName)
-    :m_Path(aPath), m_FileName(aFileName), m_FullFileName(L"")
+    :m_FileName(aFileName), m_Path(aPath), m_FullFileName(L"")
 {
 #ifdef _WIN32
     m_Separator = L"\\";
