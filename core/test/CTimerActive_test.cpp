@@ -111,7 +111,7 @@ TEST_F(CTimerActive_test, infinity_OnClose)
 
 TEST_F(CTimerActive_test, infinity_OnCheck)
 {
-    std::atomic_int lCheckReady = 0;
+    std::atomic_int lCheckReady(0);
     auto lObserver = std::make_shared<IObserverTimer_ready>(lCheckReady);
 
     ITimerActive::Ptr lTimer = CreateTimerActive(1);
@@ -121,7 +121,7 @@ TEST_F(CTimerActive_test, infinity_OnCheck)
 
 TEST_F(CTimerActive_test, infinity_exception_OnClose)
 {
-    std::atomic_int lCloseReady = 0;
+    std::atomic_int lCloseReady(0);
     auto lObserver = std::make_shared<IObserverTimer_ready_close_exception>(lCloseReady);
     {
         ITimerActive::Ptr lTimer = CreateTimerActive(1);
@@ -132,7 +132,7 @@ TEST_F(CTimerActive_test, infinity_exception_OnClose)
 
 TEST_F(CTimerActive_test, infinity_exception_OnCheck)
 {
-    std::atomic_int lCheckReady = 0;
+    std::atomic_int lCheckReady(0);
     auto lObserver = std::make_shared<IObserverTimer_ready_check_exception>(lCheckReady);
 
     ITimerActive::Ptr lTimer = CreateTimerActive(1);
@@ -142,7 +142,7 @@ TEST_F(CTimerActive_test, infinity_exception_OnCheck)
 
 TEST_F(CTimerActive_test, infinity_exception_second_true_OnCheck)
 {
-    std::atomic_int lCheckReady = 0;
+    std::atomic_int lCheckReady(0);
     auto lObserver = std::make_shared<IObserverTimer_ready_check_exception>(lCheckReady);
     auto lObserverMock = std::make_shared<IObserverTimer_mock>();
     EXPECT_CALL(*lObserverMock, HandleError(_, _)).Times(AtMost(5));
@@ -177,7 +177,7 @@ TEST_F(CTimerActive_test, noninfinity_nonzero_OnClose)
 
 TEST_F(CTimerActive_test, noninfinity_OnCheck)
 {
-    std::atomic_int lCheckReady = 0;
+    std::atomic_int lCheckReady(0);
     auto lObserver = std::make_shared<IObserverTimer_ready>(lCheckReady);
 
     ITimerActive::Ptr lTimer = CreateTimerActive(1, 4);
@@ -187,7 +187,7 @@ TEST_F(CTimerActive_test, noninfinity_OnCheck)
 
 TEST_F(CTimerActive_test, noninfinity_exception_OnClose)
 {
-    std::atomic_int lCloseReady = 0;
+    std::atomic_int lCloseReady(0);
     auto lObserver = std::make_shared<IObserverTimer_ready_close_exception>(lCloseReady);
     {
         ITimerActive::Ptr lTimer = CreateTimerActive(1, 4);
@@ -198,7 +198,7 @@ TEST_F(CTimerActive_test, noninfinity_exception_OnClose)
 
 TEST_F(CTimerActive_test, noninfinity_exception_OnCheck)
 {
-    std::atomic_int lCheckReady = 0;
+    std::atomic_int lCheckReady(0);
     auto lObserver = std::make_shared<IObserverTimer_ready_check_exception>(lCheckReady);
 
     ITimerActive::Ptr lTimer = CreateTimerActive(1, 4);
@@ -208,7 +208,7 @@ TEST_F(CTimerActive_test, noninfinity_exception_OnCheck)
 
 TEST_F(CTimerActive_test, noninfinity_exception_second_true_OnCheck)
 {
-    std::atomic_int lCheckReady = 0;
+    std::atomic_int lCheckReady(0);
     auto lObserver = std::make_shared<IObserverTimer_ready_check_exception>(lCheckReady);
     auto lObserverMock = std::make_shared<IObserverTimer_mock>();
     EXPECT_CALL(*lObserverMock, HandleError(_, _)).Times(4);

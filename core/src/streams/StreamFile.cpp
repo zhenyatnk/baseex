@@ -139,8 +139,12 @@ std::shared_ptr<std::fstream> CStreamFile::GetFile() const
     if (!m_File)
     {
         m_File = std::make_shared<std::fstream>();
-        //TODO if macos using converting wchart to char
-        m_File->open(m_Filename.GetFullFileName().c_str(), std::fstream::in);
+#ifdef _WIN32
+        m_File->open(m_Filename.GetFullFileName, std::fstream::in);
+#else
+        auto name = convert(m_Filename.GetFullFileName());
+        m_File->open(name, std::fstream::in);
+#endif
         CHECK_THROW_BOOL(m_File->is_open(), exceptions::file_stream_error, "Can't open file = '" + convert(m_Filename.GetFullFileName()) +"'");
     }
     return m_File;
@@ -181,8 +185,13 @@ private:
 CStreamFileOpt::CStreamFileOpt(const CFileName &aFilename)
     :m_Filename(aFilename), m_Size(std::string::npos)
 {
-    //TODO if macos using converting wchart to char
-    m_File.open(m_Filename.GetFullFileName().c_str(), std::fstream::in);
+    
+#ifdef _WIN32
+    m_File.open(m_Filename.GetFullFileName(), std::fstream::in);
+#else
+    auto name = convert(m_Filename.GetFullFileName());
+    m_File.open(name, std::fstream::in);
+#endif
     CHECK_THROW_BOOL(m_File.is_open(), exceptions::file_stream_error, "Can't open file = '" + convert(m_Filename.GetFullFileName()) + "'");
 
     m_File.seekg(0, m_File.end);

@@ -62,7 +62,7 @@ TEST_F(TLockingShared_test, void_lock_other_thread)
     std::vector<std::string> lValue;
     {
         aTest.lock();
-        std::atomic_int lReadyThreads = 0;
+        std::atomic_int lReadyThreads(0);
 
         auto lThread = std::thread([&]()
         {
@@ -132,7 +132,7 @@ TEST_F(TLockingShared_test, nonshared_shared_thread)
 {
     TLockingShared<void> aTest;
     aTest.lock();
-    std::atomic_bool lReady = false;
+    std::atomic_bool lReady(false);
 
     auto thread = std::thread([&]()
     {
@@ -153,11 +153,11 @@ TEST_F(TLockingShared_test, nonshared_shared_many_thread)
 {
     unsigned countThreads = 20;
     TLockingShared<void> aTest;
-    std::atomic_int lReadyThreads = 0;
+    std::atomic_int lReadyThreads(0);
 
     std::condition_variable lCondition;
     std::mutex lMutex;
-    std::atomic_bool lReally = false;
+    std::atomic_bool lReally(false);
 
     auto lfunc = [&]()
     {

@@ -155,7 +155,7 @@ class lock_guard_ex <std::shared_ptr<Type>>
 {
 public:
     lock_guard_ex(std::shared_ptr<Type> aObj)
-        :CRAII<Type>(aObj, [](std::shared_ptr<Type> aObj) {aObj->lock(); }, [](std::shared_ptr<Type> aObj) {aObj->unlock(); })
+        :CRAII<std::shared_ptr<Type> >(aObj, [](std::shared_ptr<Type> aObj) {aObj->lock(); }, [](std::shared_ptr<Type> aObj) {aObj->unlock(); })
     {}
 };
 //--------------------------------------------------------------
@@ -175,7 +175,7 @@ class force_lock_guard_ex <std::shared_ptr<Type>>
 {
 public:
     force_lock_guard_ex(std::shared_ptr<Type> aObj)
-        :CRAII<Type>(aObj, [](std::shared_ptr<Type> aObj) {aObj->force_lock(); }, [](std::shared_ptr<Type> aObj) {aObj->force_unlock(); })
+        :CRAII<std::shared_ptr<Type>>(aObj, [](std::shared_ptr<Type> aObj) {aObj->force_lock(); }, [](std::shared_ptr<Type> aObj) {aObj->force_unlock(); })
     {}
 };
 //--------------------------------------------------------------
@@ -195,7 +195,7 @@ class set_values_raii <std::atomic<Type>>
 {
 public:
     set_values_raii(std::atomic<Type>& aObj, Type aFirst, Type aSecond)
-        :CRAII<Type>(aObj, [aFirst](std::atomic<Type>& aObj) {aObj = aFirst; }, [aSecond](std::atomic<Type>& aObj) {aObj = aSecond; })
+        :CRAII<std::atomic<Type>>(aObj, [aFirst](std::atomic<Type>& aObj) {aObj = aFirst; }, [aSecond](std::atomic<Type>& aObj) {aObj = aSecond; })
     {}
 };
 

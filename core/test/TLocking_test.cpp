@@ -63,7 +63,7 @@ TEST_F(TLocking_test, void_lock_other_thread)
     std::vector<std::string> lValue;
     {
         aTest.lock();
-        std::atomic_int lReadyThreads = 0;
+        std::atomic_int lReadyThreads (0);
 
         auto lThread = std::thread([&]()
         {
@@ -99,7 +99,7 @@ TEST_F(TLocking_test, object_lock_other_thread)
     TLocking<std::vector<std::string>> aTest;
     {
         aTest.lock();
-        std::atomic_int lReadyThreads = 0;
+        std::atomic_int lReadyThreads (0);
 
         auto lThread = std::thread([&]()
         {

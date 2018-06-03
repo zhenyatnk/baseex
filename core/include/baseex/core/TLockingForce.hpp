@@ -7,29 +7,14 @@
 namespace baseex {
 namespace core {
 //--------------------------------------------------------------
-template<class Type>
-class TLockingEx
-    :public Type, public TLockingEx<void>
-{
-public:
-    TLockingEx() = default;
-
-    TLockingEx(Type&& aRght)
-        :Type(std::move(aRght))
-    {}
-
-    TLockingEx(const Type& aRght)
-        :Type(aRght)
-    {}
-};
-
+template<class Type> class TLockingEx;
 //--------------------------------------------------------------
 template<>
 class TLockingEx<void>
 {
 public:
     virtual ~TLockingEx() = default;
-
+    
     virtual void force_lock()
     {
         m_ForceLocker.lock();
@@ -56,11 +41,29 @@ public:
     {
         m_Locker.unlock();
     }
-
+    
 private:
     std::mutex m_Locker;
     std::mutex m_ForceLocker;
 };
+//--------------------------------------------------------------
+
+template<class Type>
+class TLockingEx
+    :public Type, public TLockingEx<void>
+{
+public:
+    TLockingEx() = default;
+
+    TLockingEx(Type&& aRght)
+        :Type(std::move(aRght))
+    {}
+
+    TLockingEx(const Type& aRght)
+        :Type(aRght)
+    {}
+};
+
 //--------------------------------------------------------------
 }
 }

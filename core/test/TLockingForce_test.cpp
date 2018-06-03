@@ -53,7 +53,7 @@ TEST_F(TLockingEx_test, void_lock_other_thread)
     std::vector<std::string> aValue;
     {
         aTest.lock();
-        std::atomic_int lReadyThreads = 0;
+        std::atomic_int lReadyThreads (0);
 
         auto lThread = std::thread([&]()
         {
@@ -89,7 +89,7 @@ TEST_F(TLockingEx_test, object_lock_other_thread)
     TLockingEx<std::vector<std::string>> aTest;
     {
         aTest.lock();
-        std::atomic_int lReadyThreads = 0;
+        std::atomic_int lReadyThreads (0);
 
         auto lThread = std::thread([&]()
         {
@@ -118,7 +118,7 @@ TEST_F(TLockingEx_test, object_exclock_lock_other_thread)
     unsigned numbersSimpleLock = 25;
     TLockingEx<std::vector<std::string>> aTest;
     {
-        std::atomic_int lReadyThreads = 0;
+        std::atomic_int lReadyThreads (0);
         aTest.lock();
 
         auto lfunc_lock_simple = [&]()

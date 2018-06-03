@@ -6,6 +6,29 @@
 
 namespace baseex {
 namespace core {
+    
+template<class Type> class TLocking;
+
+//--------------------------------------------------------------
+template<>
+class TLocking <void>
+{
+public:
+    virtual ~TLocking() = default;
+    
+    virtual void lock()
+    {
+        m_Locker.lock();
+    }
+    virtual void unlock()
+    {
+        m_Locker.unlock();
+    }
+    
+private:
+    std::mutex m_Locker;
+};
+
 //--------------------------------------------------------------
 template<class Type>
 class TLocking
@@ -23,25 +46,6 @@ public:
     {}
 };
 //--------------------------------------------------------------
-
-template<>
-class TLocking <void>
-{
-public:
-    virtual ~TLocking() = default;
-
-    virtual void lock()
-    {
-        m_Locker.lock();
-    }
-    virtual void unlock()
-    {
-        m_Locker.unlock();
-    }
-
-private:
-    std::mutex m_Locker;
-};
 
 }
 }

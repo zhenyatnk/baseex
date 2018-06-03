@@ -66,8 +66,8 @@ TEST_F(CRAII_test, base_pointer_counter)
     {
         ASSERT_EQ(1, lValue.use_count());
         CRAII<type> lTest(lValue,
-            [](type& aValue) {},
-            [](type& aValue) {});
+            [](type aValue) {},
+            [](type aValue) {});
 
         ASSERT_EQ(2, lValue.use_count());
     }
@@ -80,8 +80,8 @@ TEST_F(CRAII_test, base_pointer)
     type lValue = std::make_shared<type::element_type>();
     {
         CRAII<type> lTest(lValue,
-            [](type& aValue) {aValue->push_back("ctor"); },
-            [](type& aValue) {aValue->push_back("dtor"); });
+            [](type aValue) {aValue->push_back("ctor"); },
+            [](type aValue) {aValue->push_back("dtor"); });
 
         ASSERT_EQ(1, lValue->size());
         ASSERT_STREQ("ctor", (*lValue)[0].c_str());
@@ -163,7 +163,7 @@ TEST_F(CRAII_test, set_values_raii)
 TEST_F(CRAII_test, set_values_raii_atomic)
 {
     using type = std::atomic_int;
-    type lValue = 0;
+    type lValue(0);
     {
         set_values_raii<type> lTest(lValue, 10, 20);
         ASSERT_EQ(10, lValue);
@@ -222,7 +222,7 @@ TEST_F(CRAII_test, thread_join_raii_rvalue)
 
 TEST_F(CRAII_test, thread_join_raii_rvalue_notjoinable)
 {
-    thread_join_raii lTest(std::thread());
+    thread_join_raii lTest(std::thread([](){}));
 }
 
 TEST_F(CRAII_test, dtor_raii)

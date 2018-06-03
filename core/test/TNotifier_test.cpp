@@ -47,7 +47,7 @@ TEST_F(TNotifier_test, parameters_rvalue_ctor)
 TEST_F(TNotifier_test, void_notify_one)
 {
     unsigned countThreads = 2;
-    std::atomic_int lReadyThreads = 0;
+    std::atomic_int lReadyThreads(0);
 
     TNotifier<void> aTest;
 
@@ -78,7 +78,7 @@ TEST_F(TNotifier_test, void_notify_one)
 TEST_F(TNotifier_test, void_notify_all)
 {
     unsigned countThreads = 20;
-    std::atomic_int lReadyThreads = 0;
+    std::atomic_int lReadyThreads(0);
 
     TNotifier<void> aTest;
 
