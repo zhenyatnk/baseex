@@ -1,0 +1,14 @@
+# Target labels
+ googletest
+# Source files and their labels
+/Users/evgenijtinkaluk/github/baseex/.build1/googletest/googletest_download/CMakeFiles/googletest
+/Users/evgenijtinkaluk/github/baseex/.build1/googletest/googletest_download/CMakeFiles/googletest.rule
+/Users/evgenijtinkaluk/github/baseex/.build1/googletest/googletest_download/CMakeFiles/googletest-complete.rule
+/Users/evgenijtinkaluk/github/baseex/.build1/googletest/googletest_download/googletest-prefix/src/googletest-stamp/googletest-install.rule
+/Users/evgenijtinkaluk/github/baseex/.build1/googletest/googletest_download/googletest-prefix/src/googletest-stamp/googletest-mkdir.rule
+/Users/evgenijtinkaluk/github/baseex/.build1/googletest/googletest_download/googletest-prefix/src/googletest-stamp/googletest-download.rule
+/Users/evgenijtinkaluk/github/baseex/.build1/googletest/googletest_download/googletest-prefix/src/googletest-stamp/googletest-update.rule
+/Users/evgenijtinkaluk/github/baseex/.build1/googletest/googletest_download/googletest-prefix/src/googletest-stamp/googletest-patch.rule
+/Users/evgenijtinkaluk/github/baseex/.build1/googletest/googletest_download/googletest-prefix/src/googletest-stamp/googletest-configure.rule
+/Users/evgenijtinkaluk/github/baseex/.build1/googletest/googletest_download/googletest-prefix/src/googletest-stamp/googletest-build.rule
+/Users/evgenijtinkaluk/github/baseex/.build1/googletest/googletest_download/googletest-prefix/src/googletest-stamp/googletest-test.rule

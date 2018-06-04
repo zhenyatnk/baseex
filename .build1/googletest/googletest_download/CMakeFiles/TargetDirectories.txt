@@ -1,0 +1,3 @@
+/Users/evgenijtinkaluk/github/baseex/.build1/googletest/googletest_download/CMakeFiles/rebuild_cache.dir
+/Users/evgenijtinkaluk/github/baseex/.build1/googletest/googletest_download/CMakeFiles/edit_cache.dir
+/Users/evgenijtinkaluk/github/baseex/.build1/googletest/googletest_download/CMakeFiles/googletest.dir

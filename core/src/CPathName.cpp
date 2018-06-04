@@ -1,7 +1,15 @@
 #include <baseex/core/CPathName.hpp>
+#include <baseex/core/Unicode.hpp>
 
 #include <fstream>
 #include <algorithm>
+
+#ifdef _WIN32
+#include <direct.h>
+#define getcwd _getcwd
+#else
+#include <unistd.h>
+#endif
 
 namespace baseex {
 namespace core {
@@ -89,5 +97,16 @@ void CPathName::SetSeparator(std::wstring aSeparator)
     m_Separator = aSeparator;
 }
 
+CPathName GetCurrentDirectory()
+{
+    if (auto answer = getcwd(nullptr, 0))
+    {
+        auto path = CPathName(convert(answer));
+        free(answer);
+        return path;
+    }
+    THROW_ERROR(exceptions::path_name_error, "Can't get curent directory!");
+}
+    
 }
 }

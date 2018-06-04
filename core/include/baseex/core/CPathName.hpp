@@ -1,6 +1,7 @@
 #pragma once
 
 #include <baseex/core/export.hpp>
+#include <baseex/core/CPathNameException.hpp>
 
 #include <string>
 #include <memory>
@@ -31,5 +32,7 @@ private:
     std::wstring m_Separator;
 };
 
+BASEEX_CORE_EXPORT CPathName GetCurrentDirectory();
+    
 }
 }
