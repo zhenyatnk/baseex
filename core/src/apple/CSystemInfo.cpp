@@ -30,7 +30,7 @@ CGetterUsageCPU::CGetterUsageCPU()
 
 float CGetterUsageCPU::GetUsageCPU() const
 {
-    THROW_ERROR(exceptions::not_implemented_error, "CGetterUsageCPU::GetUsageCPU, for MacOS");
+    THROW_ERROR(exceptions::not_implemented_error, "CGetterUsageCPU::GetUsageCPU not implemented for MacOS");
 }
 //-----------------------------------------
 class CGetterUsageCPUProccess
