@@ -30,7 +30,7 @@ CGetterUsageCPU::CGetterUsageCPU()
 
 float CGetterUsageCPU::GetUsageCPU() const
 {
-    return 0.0f;
+    THROW_ERROR(exceptions::not_implemented_error, "CGetterUsageCPU::GetUsageCPU, for MacOS");
 }
 //-----------------------------------------
 class CGetterUsageCPUProccess
@@ -71,13 +71,10 @@ float CGetterUsageCPUProccess::GetUsageCPUProccess() const
 {
     host_cpu_load_info_data_t cpuinfo;
     mach_msg_type_number_t count = HOST_CPU_LOAD_INFO_COUNT;
-    if (host_statistics(mach_host_self(), HOST_CPU_LOAD_INFO, (host_info_t)&cpuinfo, &count) == KERN_SUCCESS)
-    {
-        unsigned long long totalTicks = 0;
-        for(int i=0; i<CPU_STATE_MAX; i++) totalTicks += cpuinfo.cpu_ticks[i];
-        return CalculateCPULoad(cpuinfo.cpu_ticks[CPU_STATE_IDLE], totalTicks) * 100;
-    }
-    else return -1.0f;
+    CHECK_THROW_BOOL(KERN_SUCCESS == host_statistics(mach_host_self(), HOST_CPU_LOAD_INFO, (host_info_t)&cpuinfo, &count), exceptions::system_info_error, "GetUsageCPUProccess cannot get host_statistics");
+    unsigned long long totalTicks = 0;
+    for(int i=0; i<CPU_STATE_MAX; i++) totalTicks += cpuinfo.cpu_ticks[i];
+    return CalculateCPULoad(cpuinfo.cpu_ticks[CPU_STATE_IDLE], totalTicks) * 100;
 }
 //-----------------------------------------
 class CSystemInfo

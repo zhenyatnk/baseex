@@ -1,6 +1,7 @@
 #pragma once
 #include <baseex/core/export.hpp>
 #include <baseex/core/TSingleton.hpp>
+#include <baseex/core/ISystemInfoException.hpp>
 
 #include <memory>
 

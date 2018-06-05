@@ -2,6 +2,7 @@
 
 #include <baseex/core/export.hpp>
 #include <stdexcept>
+#include <string>
 
 namespace baseex {
 namespace core {
@@ -41,7 +42,18 @@ public:
 private:
     int m_ErrorCode;
 };
-
+}
+    
+namespace exceptions{
+class BASEEX_CORE_EXPORT not_implemented_error
+    :public exceptions_base::error_base
+{
+public:
+    not_implemented_error(const std::string &aMessage, const int &aErrorCode)
+        :exceptions_base::error_base("Not implemented error: \'" + aMessage + "\'", aErrorCode)
+    {}
+};
+    
 }
 }
 }
