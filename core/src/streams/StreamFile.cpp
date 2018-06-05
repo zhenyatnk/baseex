@@ -140,7 +140,7 @@ std::shared_ptr<std::fstream> CStreamFile::GetFile() const
     {
         m_File = std::make_shared<std::fstream>();
 #ifdef _WIN32
-        m_File->open(m_Filename.GetFullFileName, std::fstream::in);
+        m_File->open(m_Filename.GetFullFileName(), std::fstream::in);
 #else
         auto name = convert(m_Filename.GetFullFileName());
         m_File->open(name, std::fstream::in);
