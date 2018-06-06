@@ -7,14 +7,6 @@ using namespace baseex::core;
 
 namespace
 {
-std::string ConvertToString(IStream::Ptr aStream)
-{
-    uint8_t *lBuffer = new uint8_t[aStream->Size()];
-    aStream->Read(0, lBuffer, aStream->Size());
-    std::string lRet((char*)lBuffer, aStream->Size());
-    delete[] lBuffer;
-    return lRet;
-}
 std::string ConvertToString(IStreamBuffer::Ptr aStream)
 {
     return std::string((const char*)aStream->GetData(), aStream->Size());

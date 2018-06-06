@@ -13,10 +13,6 @@ std::string ConvertToString(IStream::Ptr aStream)
     delete[] lBuffer;
     return lRet;
 }
-std::string ConvertToString(IStreamBuffer::Ptr aStream)
-{
-     return std::string((const char*)aStream->GetData(), aStream->Size());
-}
 std::string ConvertToString(IStreamWriteBuffer::Ptr aStream)
 {
     return std::string((const char*)aStream->GetData(), aStream->Size());
@@ -148,7 +144,6 @@ TEST_F(StreamBuffer_testEx, read_stream_data_big_size)
 {
     std::string lNominalPart = "test1";
     std::string lNominal = lNominalPart + " test2";
-    unsigned lSecondPartSize = lNominal.size() - lNominalPart.size();
 
     IStream::Ptr lNominalStream = CreateStreamBuffer(lNominal.c_str(), lNominal.size());
     IStream::Ptr lResultStream = lNominalStream->Read(lNominalPart.size(), 1024);

@@ -8,11 +8,29 @@ namespace baseex {
 namespace core {
 namespace exceptions_base {
 
+#ifdef _WIN32
+    #define __CROSS_FILE__ __FILE__
+    #define __CROSS_LINE__ __LINE__
+    #define __CROSS_FUNCTION__ __FUNCSIG__
+#elif __APPLE__
+    #define __CROSS_FILE__ __FILE__
+    #define __CROSS_LINE__ __LINE__
+    #define __CROSS_FUNCTION__ __PRETTY_FUNCTION__
+#elif __linux__
+    #define __CROSS_FILE__ __FILE__
+    #define __CROSS_LINE__ __LINE__
+    #define __CROSS_FUNCTION__ __PRETTY_FUNCTION__
+#else
+#   error "Unknown compiler"
+#endif
+    
+#define __FULL_FUNCTION_NAME__ std::string(" File:") + std::string(__CROSS_FILE__) + std::string(":") + std::to_string(__CROSS_LINE__) + std::string(" Function:\"") + std::string(__CROSS_FUNCTION__) + std::string("\"")
+    
 #define ERR_UNKNOWN   0xFFFFFFFF
 
-#define THROW_ERROR_BY_CODE(error, type_exception, message) throw type_exception(message, error)
-#define THROW_ERROR_BY_CODE2(error, type_exception, message1, message2) throw type_exception(message1, message2, error)
-#define THROW_ERROR_BY_CODE3(error, type_exception, message1, message2, message3) throw type_exception(message1, message2, message3, error)
+#define THROW_ERROR_BY_CODE(error, type_exception, message) throw type_exception(message + __FULL_FUNCTION_NAME__, error)
+#define THROW_ERROR_BY_CODE2(error, type_exception, message1, message2) throw type_exception(message1 + __FULL_FUNCTION_NAME__, message2, error)
+#define THROW_ERROR_BY_CODE3(error, type_exception, message1, message2, message3) throw type_exception(message1 + __FULL_FUNCTION_NAME__, message2, message3, error)
 #define THROW_ERROR(type_exception, message) THROW_ERROR_BY_CODE(ERR_UNKNOWN, type_exception, message)
 #define THROW_ERROR2(type_exception, message1, message2) THROW_ERROR_BY_CODE2(ERR_UNKNOWN, type_exception, message1, message2)
 #define THROW_ERROR3(type_exception, message1, message2, message3) THROW_ERROR_BY_CODE3(ERR_UNKNOWN, type_exception, message1, message2, message3)
