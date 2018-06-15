@@ -14,13 +14,13 @@ public:
 //--------------------------------------------------------------------------------------------------------------------------------------
 TEST_F(StreamFile_test, size)
 {
-    IStream::Ptr lStream = CreateStreamFile(baseex::core::CFileName(GetCurrentDirectory().AddPath(L".."), L"test.txt"));
+    IStream::Ptr lStream = CreateStreamFile(baseex::core::CFileName(L"../test.txt"));
     ASSERT_EQ(11, lStream->Size());
 }
 
 TEST_F(StreamFile_test, read_buffer_full)
 {
-    IStream::Ptr lStream = CreateStreamFile(baseex::core::CFileName(GetCurrentDirectory().AddPath(L".."), L"test.txt"));
+    IStream::Ptr lStream = CreateStreamFile(baseex::core::CFileName(L"../test.txt"));
     uint8_t *lResult = new uint8_t[lStream->Size() + 1];
     lStream->Read(0, lResult, lStream->Size());
     lResult[lStream->Size()] = 0;
@@ -30,13 +30,13 @@ TEST_F(StreamFile_test, read_buffer_full)
 
 TEST_F(StreamFile_test, opt_size)
 {
-    IStream::Ptr lStream = CreateStreamFileOpt(baseex::core::CFileName(GetCurrentDirectory().AddPath(L".."), L"test.txt"));
+    IStream::Ptr lStream = CreateStreamFileOpt(baseex::core::CFileName(L"../test.txt"));
     ASSERT_EQ(11, lStream->Size());
 }
 
 TEST_F(StreamFile_test, opt_read_buffer_full)
 {
-    IStream::Ptr lStream = CreateStreamFileOpt(baseex::core::CFileName(GetCurrentDirectory().AddPath(L".."), L"test.txt"));
+    IStream::Ptr lStream = CreateStreamFileOpt(baseex::core::CFileName(L"../test.txt"));
     uint8_t *lResult = new uint8_t[lStream->Size() + 1];
     lStream->Read(0, lResult, lStream->Size());
     lResult[lStream->Size()] = 0;
