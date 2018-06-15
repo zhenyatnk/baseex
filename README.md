@@ -1,4 +1,4 @@
-= BASEEX =
+= BASEEX = https://travis-ci.org/zhenyatnk/baseex.svg?branch=master
 
 == Setting Up the Environment ==
 
