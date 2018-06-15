@@ -15,11 +15,11 @@ matrix:
 platform:
     # будем гонять CI на amd64 и x86...
     - x64
-    - x86
+    #- x86
 
 configuration:
     # ... и в дебажной, и в релизной конфигурациях ...
-    - Debug
+    #- Debug
     - Release
 
 environment:
@@ -35,6 +35,6 @@ build_script:
     - cmake .. %CMAKE_CONFIGURE_FLAGS%
     - cmake --build . %CMAKE_BUILD_FLAGS%
 
-test_script:
+#test_script:
     # скрипт тестирования проекта:
-    - ctest -C %CONFIGURATION% --output-on-failure
+    #- ctest -C %CONFIGURATION% --output-on-failure
