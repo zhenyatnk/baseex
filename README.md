@@ -1,4 +1,4 @@
-= BASEEX = https://travis-ci.org/zhenyatnk/baseex.svg?branch=master
+= BASEEX = [![Build Status](https://travis-ci.org/zhenyatnk/baseex.svg?branch=master)](https://travis-ci.org/zhenyatnk/baseex)
 
 == Setting Up the Environment ==
 
