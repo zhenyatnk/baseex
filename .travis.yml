@@ -17,7 +17,7 @@ script:
     - cd .build
     - cmake -DCOVERALLS=ON -DCMAKE_BUILD_TYPE=Debug ..
     - cmake --build .
-    - ctest
+    - ctest --verbose
 
 after_success:
   - coveralls --root ../ --build-root ./ --gcov-options '\-lp' -E ".*gtest.*" -E ".*CMakeFiles.*" --exclude .build
