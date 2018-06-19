@@ -1,8 +1,15 @@
 language: cpp
 os: osx
 compiler: clang
+
+before_install:
+  - pip install --user cpp-coveralls
+  
 script:
     - mkdir .build
     - cd .build
     - cmake ..
     - cmake --build .
+
+after_success:
+  - coveralls --root . -E ".*gtest.*" -E ".*CMakeFiles.*"
