@@ -2,6 +2,11 @@
 #  Base file for building with cmake
 #
 
+if (COVERALLS)
+    # Include cmake configuration coverage function file.
+    include("${CMAKE_SOURCE_DIR}/cmakebase/Coveralls.cmake")
+endif()
+
 # Set type component (EXECUTABLE or LIBRARY).
 set(${_project_name}_${_component_name}_component_type "${_component_type}"
     CACHE STRING "Type of ${_project_name}_${_component_type} module to be created (EXECUTABLE|LIBRARY).")
@@ -98,6 +103,14 @@ elseif("${${_project_name}_${_component_name}_component_type}" STREQUAL "executa
 else()
     message(ERROR_FATAL "Unknown component type for ${_project_name}")
 endif()
+
+if (COVERALLS)
+    coveralls_setup(
+        "${${_project_name}_${_component_name}_SOURCES}"
+        "OFF"
+        "${CMAKE_SOURCE_DIR}/cmakebase")
+endif()
+
 
 #
 # Switch exports to the appropriate state STATIC or SHARED.
