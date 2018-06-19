@@ -19,4 +19,4 @@ script:
     - cmake --build .
 
 after_success:
-  - coveralls --root ../ --build-root ./ -E ".*gtest.*" -E ".*CMakeFiles.*" --exclude .build
+  - coveralls --root ../ --build-root ./ --gcov-options '\-lp' -E ".*gtest.*" -E ".*CMakeFiles.*" --exclude .build
