@@ -2,7 +2,8 @@ language: cpp
 os: osx
 compiler: clang
 
-before_install:
+install:
+  - pip install --user nose
   - pip install --user cpp-coveralls
   
 script:
