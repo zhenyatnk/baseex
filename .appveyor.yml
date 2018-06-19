@@ -35,6 +35,6 @@ build_script:
     - cmake .. %CMAKE_CONFIGURE_FLAGS%
     - cmake --build . %CMAKE_BUILD_FLAGS%
 
-#test_script:
+test_script:
     # скрипт тестирования проекта:
-    #- ctest -C %CONFIGURATION% --output-on-failure
+    - ctest -C %CONFIGURATION% --output-on-failure
