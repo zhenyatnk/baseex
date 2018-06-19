@@ -35,6 +35,11 @@ enable_testing()
 
 configure_file("${CMAKE_CURRENT_LIST_DIR}/version/version.hpp.cmake.in"
                "${CMAKE_CURRENT_BINARY_DIR}/binary_include/${_project_name}/version/version.hpp")
+if (COVERALLS)
+	# Include cmake configuration coverage function file.
+	include("${CMAKE_CURRENT_LIST_DIR}/cmakebase/Coveralls.cmake")
+	coveralls_turn_on_coverage()
+endif()
 
 #
 # Add components subdirectories.

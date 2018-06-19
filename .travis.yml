@@ -15,7 +15,7 @@ before_install:
 script:
     - mkdir .build
     - cd .build
-    - cmake ..
+    - cmake -DCOVERALLS=ON -DCMAKE_BUILD_TYPE=Debug ..
     - cmake --build .
 
 after_success:
