@@ -20,7 +20,7 @@ platform:
 configuration:
     # ... и в дебажной, и в релизной конфигурациях ...
     - Debug
-    - Release
+    #- Release
 
 environment:
     matrix:
