@@ -19,7 +19,7 @@ platform:
 
 configuration:
     # ... и в дебажной, и в релизной конфигурациях ...
-    #- Debug
+    - Debug
     - Release
 
 environment:
@@ -37,4 +37,4 @@ build_script:
 
 test_script:
     # скрипт тестирования проекта:
-    - ctest --output-on-failure
+    - ctest -C %CONFIGURATION% --output-on-failure
