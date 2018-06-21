@@ -36,15 +36,6 @@ TEST_F(CTimerPassive_test, check_reset_false)
     ASSERT_EQ(false, lTimer->Check());
 }
 
-TEST_F(CTimerPassive_test, check_reset_sleep)
-{
-    ITimerPassive::Ptr lTimer = CreateTimerPassive(100);
-    std::this_thread::sleep_for(std::chrono::milliseconds(60));
-    lTimer->Reset();
-    std::this_thread::sleep_for(std::chrono::milliseconds(60));
-    ASSERT_EQ(false, lTimer->Check());
-}
-
 TEST_F(CTimerPassive_test, check)
 {
     ITimerPassive::Ptr lTimer = CreateTimerPassive(1);
